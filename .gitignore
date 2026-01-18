@@ -1,0 +1,143 @@
+# Laravel
+*.log
+.DS_Store
+.env
+.env.backup
+.env.production
+.env.local
+.env.testing
+.phpactor.json
+.phpunit.result.cache
+/.fleet
+/.idea
+/.nova
+/.phpunit.cache
+/.vscode
+/.zed
+/auth.json
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/public/vendor
+/storage/*.key
+/storage/pail
+/vendor
+Homestead.json
+Homestead.yaml
+Thumbs.db
+
+# Database
+database.sqlite
+database.sqlite-journal
+*.db
+*.db-journal
+
+# File Uploads & Storage
+/storage/app/public/uploads/*
+/storage/app/private/documents/*
+/storage/app/temp/*
+!/storage/app/public/.gitignore
+!/storage/app/private/.gitignore
+
+# Cache & Sessions
+/bootstrap/cache/*.php
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+!/storage/framework/cache/data/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/views/.gitignore
+
+# Logs
+/storage/logs/*.log
+!/storage/logs/.gitignore
+
+# Testing
+/coverage/
+/.phpunit.cache
+/tests/coverage/
+phpunit.xml
+
+# API Platform Admin (Node.js)
+/admin/node_modules/
+/admin/dist/
+/admin/build/
+/admin/.env.local
+/admin/.env.development.local
+/admin/.env.test.local
+/admin/.env.production.local
+/admin/npm-debug.log*
+/admin/yarn-debug.log*
+/admin/yarn-error.log*
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*.tmp
+
+# Security & Keys
+/storage/oauth-*.key
+/storage/jwt.key
+/storage/jwt.key.pub
+*.pem
+*.key
+*.crt
+
+# Payment Gateway Test Files
+/storage/app/test-receipts/
+/storage/app/test-transactions/
+
+# Content Management Uploads
+/storage/app/public/content-images/*
+/storage/app/public/hero-images/*
+/storage/app/public/advertisements/*
+!/storage/app/public/content-images/.gitignore
+!/storage/app/public/hero-images/.gitignore
+!/storage/app/public/advertisements/.gitignore
+
+# Elasticsearch
+/storage/elasticsearch/
+
+# Redis dump
+dump.rdb
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
+# Documentation build files
+/docs/build/
+/docs/.vuepress/dist/
+
+# Package managers
+package-lock.json
+yarn.lock
+composer.lock
+
+# Local development
+.vagrant/
+docker-compose.override.yml
+.docker/
+
+# Deployment
+/deploy.php
+/deployment/
+/.deployer/
