@@ -110,8 +110,9 @@ class NormalizedLookupSeeder extends Seeder
 
         // Payment gateways
         $paymentGateways = [
-            ['name' => 'Stripe', 'is_active' => true, 'configuration' => json_encode(['supports_cards' => true, 'supports_bank' => true])],
-            ['name' => 'PayPal', 'is_active' => true, 'configuration' => json_encode(['supports_paypal_account' => true])],
+            ['name' => 'Pesapal', 'is_active' => true, 'configuration' => json_encode(['supports_cards' => true, 'supports_mobile_money' => true, 'supports_bank_transfer' => true])],
+            ['name' => 'Stripe', 'is_active' => false, 'configuration' => json_encode(['supports_cards' => true, 'supports_bank' => true])],
+            ['name' => 'PayPal', 'is_active' => false, 'configuration' => json_encode(['supports_paypal_account' => true])],
             ['name' => 'M-Pesa', 'is_active' => true, 'configuration' => json_encode(['provider' => 'safaricom', 'country' => 'KE'])],
             ['name' => 'Bank Transfer', 'is_active' => true, 'configuration' => json_encode(['manual_verification' => true])],
         ];

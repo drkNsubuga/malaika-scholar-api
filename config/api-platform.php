@@ -25,7 +25,7 @@ return [
     'routes' => [
         'domain' => null,
         // Global middleware applied to every API Platform routes
-        // 'middleware' => [],
+        'middleware' => ['api', 'cors'],
     ],
 
     'resources' => [

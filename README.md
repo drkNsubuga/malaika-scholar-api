@@ -13,7 +13,7 @@ A comprehensive Laravel-based REST API powered by API Platform that serves the M
 - **Queue**: Redis/Database
 - **File Storage**: AWS S3 (configurable)
 - **Search**: Elasticsearch (for advanced search)
-- **Payment**: Stripe, PayPal, Mobile Money APIs
+- **Payment**: Pesapal (Primary), Stripe, PayPal, Mobile Money APIs
 - **Email**: Laravel Mail with SMTP/SES
 - **Documentation**: Auto-generated OpenAPI/Swagger via API Platform
 
@@ -47,7 +47,7 @@ cp .env.example .env
 # Generate application key
 php artisan key:generate
 
-# Configure your database and other services in .env
+# Configure your database, Pesapal, and other services in .env
 ```
 
 ### 3. Database Setup
@@ -83,6 +83,19 @@ php artisan queue:work
 npm run dev
 ```
 
+### 6. Payment System Setup (Pesapal)
+
+```bash
+# Test Pesapal connection
+php artisan pesapal:test-connection
+
+# Register IPN URL with Pesapal
+php artisan pesapal:register-ipn
+
+# Add the returned IPN ID to your .env file
+# PESAPAL_DEFAULT_NOTIFICATION_ID=your_ipn_id_here
+```
+
 ## 📚 API Documentation
 
 Once the server is running, access:
@@ -92,6 +105,17 @@ Once the server is running, access:
 - **Admin Interface**: http://localhost:3000/admin (after npm run dev)
 - **Swagger UI**: Available through the API documentation
 
+## 📖 Additional Documentation
+
+Detailed documentation for specific features:
+
+- **[Pesapal Payment Integration](docs/PESAPAL_INTEGRATION.md)** - Complete guide for payment processing
+- **[Storage Configuration](docs/STORAGE_CONFIGURATION.md)** - File storage and upload configuration
+- **[API Platform Guide](docs/API_PLATFORM.md)** - Working with API Platform resources
+- **[Security Guide](docs/SECURITY.md)** - Security features and best practices
+- **[Deployment Guide](docs/DEPLOYMENT.md)** - Production deployment instructions
+- **[Admin Setup Guide](docs/ADMIN_SETUP.md)** - Admin interface configuration
+
 ## 🏗️ System Architecture
 
 ### Core Components
@@ -99,10 +123,10 @@ Once the server is running, access:
 1. **User Management**: Multi-role authentication (Students, Parents, Schools, Sponsors, Donors, Admins)
 2. **Scholarship Opportunities**: Complete CRUD with advanced filtering and search
 3. **Application Workflow**: Multi-step application process with document uploads
-4. **Payment Processing**: Multiple gateway support (Stripe, PayPal, Mobile Money)
-5. **Content Management**: Dynamic homepage content with flexible layouts
-6. **Notification System**: Multi-channel notifications (Email, SMS, In-App)
-7. **File Management**: Secure document upload and storage
+4. **Payment Processing**: Pesapal integration with multiple payment methods (Cards, Mobile Money, Bank transfers)
+5. **File Management**: Secure document upload with virus scanning and access control
+6. **Content Management**: Dynamic homepage content with flexible layouts
+7. **Notification System**: Multi-channel notifications (Email, SMS, In-App)
 8. **Analytics & Reporting**: Real-time metrics and dashboard analytics
 
 ### API Resources
@@ -113,10 +137,11 @@ The system provides RESTful endpoints for:
 /api/users                    # User management
 /api/opportunities           # Scholarship opportunities
 /api/applications           # Student applications
-/api/payments               # Payment processing
+/api/payments               # Payment processing (Pesapal integration)
+/api/files                  # File upload and management
+/api/documents              # Document management with access control
 /api/notifications          # Notification management
 /api/scholastic_materials   # Educational materials inventory
-/api/documents              # Document management
 /api/homepage_sections      # Dynamic homepage content
 /api/content_blocks         # Content management
 /api/layout_templates       # Layout templates
@@ -157,6 +182,11 @@ Access the admin panel at `http://localhost:3000/admin` to manage:
 Key configuration options in `.env`:
 
 ```env
+# Application
+APP_NAME="Malaika Backend API"
+APP_ENV=local
+APP_URL=http://localhost
+
 # Database
 DB_CONNECTION=sqlite
 DB_DATABASE=/absolute/path/to/database.sqlite
@@ -171,11 +201,16 @@ AWS_SECRET_ACCESS_KEY=your_secret
 AWS_DEFAULT_REGION=us-east-1
 AWS_BUCKET=your_bucket
 
-# Payment Gateways
-STRIPE_KEY=your_stripe_key
-STRIPE_SECRET=your_stripe_secret
-PAYPAL_CLIENT_ID=your_paypal_client_id
-PAYPAL_CLIENT_SECRET=your_paypal_secret
+# Pesapal Payment Gateway
+PESAPAL_ENVIRONMENT=sandbox
+PESAPAL_CONSUMER_KEY=your_consumer_key
+PESAPAL_CONSUMER_SECRET=your_consumer_secret
+PESAPAL_DEFAULT_CURRENCY=KES
+
+# Security & File Upload
+VIRUS_SCAN_METHOD=basic
+MAX_FILE_SIZE=10485760
+UPLOADS_PER_MINUTE=10
 
 # Email
 MAIL_MAILER=smtp
@@ -293,15 +328,36 @@ php artisan view:clear
 php artisan optimize:clear
 ```
 
+### Useful Commands
+
+```bash
+# Payment system
+php artisan pesapal:test-connection    # Test Pesapal API connectivity
+php artisan pesapal:register-ipn       # Register IPN URL with Pesapal
+
+# File management
+php artisan storage:info               # Check storage configuration
+php artisan storage:cleanup-temp       # Clean up temporary files
+
+# Queue management
+php artisan queue:work                 # Process background jobs
+php artisan queue:restart              # Restart queue workers
+
+# Cache management
+php artisan cache:clear                # Clear application cache
+php artisan config:cache               # Cache configuration files
+```
+
 ## 🔒 Security Features
 
 - **Authentication**: JWT token-based with configurable expiration
 - **Authorization**: Role-based access control (RBAC)
 - **Input Validation**: Comprehensive validation for all endpoints
 - **XSS Prevention**: HTML sanitization for content management
-- **File Security**: Virus scanning and type validation
-- **Rate Limiting**: API rate limiting to prevent abuse
+- **File Security**: Multi-layer virus scanning and type validation
+- **Rate Limiting**: API rate limiting and upload rate limiting
 - **Audit Logging**: Security event logging for compliance
+- **Payment Security**: Secure Pesapal integration with encrypted transactions
 
 ## 📊 Monitoring & Analytics
 

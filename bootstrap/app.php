@@ -15,6 +15,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(prepend: [
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
         ]);
+        
+        // Register custom middleware aliases
+        $middleware->alias([
+            'auth.api' => \App\Http\Middleware\AuthenticateApi::class,
+            'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'upload.rate.limit' => \App\Http\Middleware\FileUploadRateLimit::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
